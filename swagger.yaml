@@ -1,0 +1,223 @@
+swagger: "2.0"
+info:
+  description: "Api definition"
+  version: "1.0.0"
+  title: "Inycharge"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "pedro120919934@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8000"
+basePath: "/v1"
+tags:
+- name: "organization"
+- name: "chargePoint"
+schemes:
+- "http"
+paths:
+  /organization:
+    get:
+      tags:
+      - "organization"
+      operationId: "getAllOrganizations"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Organization"
+    post:
+      tags:
+      - "organization"
+      operationId: "addOrganization"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Organization"
+      responses:
+        "405":
+          description: "Invalid input"
+  /organization/{organizationId}:
+    get:
+      tags:
+      - "organization"
+      summary: "Find organization by ID"
+      operationId: "getOrganizationById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "organizationId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Organization"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Organization not found"
+    put:
+      tags:
+      - "organization"
+      operationId: "updateOrganization"
+      consumes:
+        - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "organizationId"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "organization"
+        required: true
+        schema:
+          $ref: "#/definitions/Organization"
+      responses:
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "organization"
+      operationId: "deleteOrganization"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "organizationId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Organization not found"
+  /charge_point:
+    get:
+      tags:
+      - "chargePoint"
+      operationId: "getAllChargerPoints"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ChargePoint"
+    post:
+      tags:
+      - "chargePoint"
+      operationId: "addChargePoint"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/ChargePoint"
+      responses:
+        "405":
+          description: "Invalid input"
+  /charge_point/{chargePointId}:
+    get:
+      tags:
+      - "chargePoint"
+      summary: "Find charge point by ID"
+      operationId: "getChargePointById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "chargePointId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ChargePoint"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Charge point not found"
+    put:
+      tags:
+      - "chargePoint"
+      operationId: "updateChargePoint"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "chargePointId"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "chargePoint"
+        required: true
+        schema:
+          $ref: "#/definitions/ChargePoint"
+      responses:
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "chargePoint"
+      operationId: "deleteChagerPoint"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "chargePointId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Charge point not found"
+ 
+definitions:
+  Organization:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      legalEntity:
+        type: "string"
+  ChargePoint:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      identity:
+        type: "string"
+      cpo:
+        $ref: '#/definitions/Organization'
